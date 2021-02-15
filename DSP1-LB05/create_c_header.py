@@ -57,7 +57,7 @@ print(src_file)
 if not os.path.isfile(src_file):
     print("Input file not existing. Abort.")
     sys.exit(-1)
-dst_file = os.path.join(os.path.dirname(src_file), "fdacoeffs.h")
+dst_file = os.path.join(os.path.dirname(src_file), "fdacoefs.h")
 
 data = np.load(src_file)
 np_data = data.astype(float)
