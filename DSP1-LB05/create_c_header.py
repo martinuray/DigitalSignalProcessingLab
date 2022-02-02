@@ -1,7 +1,10 @@
 import datetime
-import numpy as np
 import os
 import sys
+from pathlib import Path
+
+import numpy as np
+
 
 def export_coe_c_header(data, use_int32=True):
     """
@@ -52,16 +55,28 @@ def export_coe_c_header(data, use_int32=True):
     return exp_str
 
 
-src_file = os.path.abspath(sys.argv[1])
-print(src_file)
-if not os.path.isfile(src_file):
-    print("Input file not existing. Abort.")
-    sys.exit(-1)
-dst_file = os.path.join(os.path.dirname(src_file), "fdacoefs.h")
+if __name__ == "__main__":
 
-data = np.load(src_file)
-np_data = data.astype(float)
+    if len(sys.argv) < 2:
+        raise Exception("Not enough arguments given. Specify path to source file!")
 
-file_content = export_coe_c_header(np_data, use_int32=False)
-with open(dst_file, "w") as f:
-    f.write(file_content)
+    src_file = sys.argv[1]
+    src_file_path = Path(src_file).absolute()
+
+    if not src_file_path.exists():
+        raise FileNotFoundError("Source file not found!")
+
+    dst_file = src_file_path.parent / "fdacoefs.h"
+
+    try:
+        data = np.load(src_file)
+        np_data = data.astype(float)
+
+    except:
+
+        raise Exception("Could not read filter data.")
+
+    file_content = export_coe_c_header(np_data, use_int32=False)
+
+    with open(dst_file, "w") as f:
+        f.write(file_content)
