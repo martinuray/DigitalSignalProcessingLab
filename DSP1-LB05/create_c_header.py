@@ -39,7 +39,7 @@ def export_coe_c_header(data, use_int32=True):
     ...
     """
 
-    dataType = "float"
+    dataType = "double"
 
     # Data Type
     if use_int32:
@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     try:
         data = np.load(src_file)
-        np_data = data.astype(float)
+        np_data = data.astype(np.float64)
 
     except:
 
