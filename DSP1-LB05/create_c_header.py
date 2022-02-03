@@ -82,7 +82,7 @@ if __name__ == "__main__":
     if not src_file_path.exists():
         raise FileNotFoundError("Source file not found!")
 
-    dst_file = src_file_path.parent / "fdacoefs.h"
+    dst_file = src_file_path.parent / "fdacoeffs.h"
 
     try:
         data = np.load(src_file)
